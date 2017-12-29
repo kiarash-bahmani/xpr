@@ -1,2 +1,4 @@
 export const LOADING_START = 'LOADING_START'
 export const LOADING_FINISH = 'LOADING_FINISH'
+export const LOADING_FAILED = 'LOADING_FAILED'
+export const DATA_LOADED = 'DATA_LOADED'

@@ -6,9 +6,17 @@ import AsyncLoading from '../common/AsyncLoading.js'
 import Chart from 'react-c3js';
 import 'c3/c3.css';
 import './style.css'
+import {
+  loadData
+} from '../../actions/app'
 
 class App extends Component {
-
+  constructor(props) {
+    super(props)
+    if (props.data.length === 0) {
+      props.actions.loadData('day')
+    }
+  }
 
   render() {
     const data = {
@@ -27,9 +35,11 @@ class App extends Component {
 
 export default connect(
   state => ({
+    data: state.app.data
   }),
   dispatch => ({
     actions: bindActionCreators({
+      loadData
     }, dispatch)
   })
 )(App)
