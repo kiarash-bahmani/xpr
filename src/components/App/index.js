@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Loadable from 'react-loadable'
 import AsyncLoading from '../common/AsyncLoading.js'
-import Chart from 'react-c3js';
-import 'c3/c3.css';
 import './style.css'
 import {
   loadData
@@ -18,23 +16,47 @@ class App extends Component {
     }
   }
 
+  groupData() {
+    let { data } = this.props
+    let group = {}
+    for (let c of data) {
+      if (group[c.source]) {
+        group[c.source].push(c)
+      } else {
+        group[c.source] = [c]
+      }
+    }
+    return group
+  }
+
   render() {
+    let { rate, total, count } = this.props
     const AsyncHeader = Loadable({
       loader: () => import('../Header'),
       loading: AsyncLoading
     })
     AsyncHeader.preload()
 
-    const data = {
-      columns: [
-        ['data1', 30, 200, 100, 400, 150, 250],
-        ['data2', 50, 20, 10, 40, 15, 25]
-      ]
-    };
+    const AsyncPieChart = Loadable({
+      loader: () => import('../PieChart'),
+      loading: AsyncLoading
+    })
+    AsyncPieChart.preload()
+
+    let groupedData = this.groupData()
+
+    let pieCharts = Object.entries(groupedData).map(([source, list]) => {
+      if (source !== 'RIPPLE') {
+        return <AsyncPieChart key={source} source={source} data={list} rate={rate} total={total} count={count} />
+      }
+    })
+
     return (
       <div className='app'>
         <AsyncHeader />
-        <Chart data={data} />
+        <div className='pie-charts'>
+          {pieCharts}
+        </div>
       </div>
     )
   }
@@ -42,7 +64,10 @@ class App extends Component {
 
 export default connect(
   state => ({
-    data: state.app.data
+    data: state.app.data,
+    rate: state.app.rate,
+    total: state.app.total,
+    count: state.app.count
   }),
   dispatch => ({
     actions: bindActionCreators({

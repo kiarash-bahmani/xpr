@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/app/actionTypes'
 const initialState = {
   data: [],
   currency: null,
-  rate: 1.0000000,
+  rate: 1,
   total: 0,
   count: 0,
   period: 'day',
@@ -37,7 +37,7 @@ const appReducer = (state = initialState, action) => {
       for (let c of exchange.components) {
         components.push({
           base_volume: Number.parseFloat(c.amount),
-          counter_volume: Number.parseFloat(c.counverted_amount),
+          counter_volume: Number.parseFloat(c.converted_amount),
           count: c.count,
           source: 'RIPPLE',
           base_currency: c.base.currency,
