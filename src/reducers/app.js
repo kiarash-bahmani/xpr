@@ -2,11 +2,11 @@ import * as actionTypes from '../actions/app/actionTypes'
 
 const initialState = {
   data: [],
-  currency: 'XPR',
+  currency: null,
   rate: 1.0000000,
   total: 0,
   count: 0,
-  period: '1day',
+  period: 'day',
   loading: false,
   error: null,
   rateError: null
@@ -45,14 +45,19 @@ const appReducer = (state = initialState, action) => {
           rate: Number.parseFloat(c.rate)
         })
       }
+      var period = market.period
+      if (period === '1day' || period === '1hour') { // normalize data
+        period = period.split(1)[1]
+      }
+
       return {
         ...state,
         data: components,
-        currency: exchange.exchange.currency,
+        currency: state.currency || exchange.exchange.currency,
         rate: Number.parseFloat(exchange.exchange_rate),
         total: Number.parseFloat(exchange.total) + Number.parseFloat(market.total),
         count: Number.parseFloat(exchange.count) + market.components.reduce((s, o) => { return s + o.count }, 0),
-        period: market.period,
+        period: period,
         loading: false,
         error: null
       }
@@ -66,7 +71,7 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.RATE_FAILED:
       return {
         ...state,
-        currency: 'XPR',
+        currency: 'XRP',
         rate: 1,
         rateError: action.data.error
       }

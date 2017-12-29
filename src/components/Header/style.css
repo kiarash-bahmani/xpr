@@ -1,0 +1,52 @@
+.header {
+  width: 100%;
+  min-height: 30px;
+  padding: 5px;
+  margin-bottom: 20px;
+  box-shadow: 1px 8px 6px -3px #E0E0E0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  color: #9E9E9E;
+}
+
+.header .currency {
+  display: flex;
+
+}
+
+.header .period {
+  display: flex;
+}
+
+.header .period div {
+  width: 60px;
+}
+
+.header .currency div, .header .period div {
+  padding: 3px;
+  margin-right: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+.header .currency div:hover, .header .period div:hover {
+  cursor: pointer;
+  border-bottom: 2px solid #607D8B;
+  color: #455A64;
+}
+
+.header .selected {
+  border-bottom: 2px solid #2196F3;
+  color: #2196F3;
+}
+
+.header .total .note{
+  font-size: 9px;
+}
+
+.header .total .value{
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-block;
+}

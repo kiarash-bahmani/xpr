@@ -27,8 +27,8 @@ export const loadData = (period) => {
 
 export const loadRate = (period, currency) => {
   period = period || 'day'
-  currency = currency || 'XPR'
-  if (currency === 'XPR') {
+  currency = currency || 'XRP'
+  if (currency === 'XRP') {
     return dispatch => {
       dispatch({ type: actionTypes.RATE_LOADED, data: { currency: currency, rate: 1 } })
     }

@@ -7,8 +7,7 @@ import Chart from 'react-c3js';
 import 'c3/c3.css';
 import './style.css'
 import {
-  loadData,
-  loadRate
+  loadData
 } from '../../actions/app'
 
 class App extends Component {
@@ -16,11 +15,16 @@ class App extends Component {
     super(props)
     if (props.data.length === 0) {
       props.actions.loadData('day')
-      props.actions.loadRate('day', 'USD')
     }
   }
 
   render() {
+    const AsyncHeader = Loadable({
+      loader: () => import('../Header'),
+      loading: AsyncLoading
+    })
+    AsyncHeader.preload()
+
     const data = {
       columns: [
         ['data1', 30, 200, 100, 400, 150, 250],
@@ -29,6 +33,7 @@ class App extends Component {
     };
     return (
       <div className='app'>
+        <AsyncHeader />
         <Chart data={data} />
       </div>
     )
@@ -41,8 +46,7 @@ export default connect(
   }),
   dispatch => ({
     actions: bindActionCreators({
-      loadData,
-      loadRate
+      loadData
     }, dispatch)
   })
 )(App)
