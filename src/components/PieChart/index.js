@@ -26,7 +26,7 @@ class PieChart extends Component {
     console.log(data)
     return (
       <div className='pie-chart'>
-        <span>{source}</span>
+        <span className='title'>{source}</span>
         <Chart data={chartConfig} />
       </div>
     );
