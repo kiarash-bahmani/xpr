@@ -8,8 +8,7 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import localForage from 'localforage'
 import rootReducer from './reducers'
-import './index.css';
-import App from './App';
+import App from './components/App'
 import registerServiceWorker from './registerServiceWorker';
 
 let middlewarePackeges = [thunk]
