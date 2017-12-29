@@ -67,25 +67,35 @@ class Header extends Component {
     }
     return (
       <React.Fragment>
-        <div className='note'>Total XRP trade volume in: {props.currency}</div>
+        <div className='note'>Total XRP trade volume in: <span>{props.currency}</span></div>
         <div className='value'>{value}</div>
       </React.Fragment>
     )
   }
 
   render() {
-    return (
-      <div className='header'>
-        <div className='currency'>
-          {this.renderCurrency()}
-        </div>
-        <div className='period'>
-          {this.renderPeriod()}
-        </div>
-        <div className='total'>
-          <span>{this.renderTotal()}</span>
+    let { props } = this
+    let loading = props.loading && (
+      <div className='loading'>
+        <div className='loader'>
         </div>
       </div>
+    )
+    return (
+      <React.Fragment>
+        {loading}
+        <div className='header'>
+          <div className='currency'>
+            {this.renderCurrency()}
+          </div>
+          <div className='period'>
+            {this.renderPeriod()}
+          </div>
+          <div className='total'>
+            <span>{this.renderTotal()}</span>
+          </div>
+        </div>
+      </React.Fragment>
     )
   }
 }
@@ -95,7 +105,8 @@ export default connect(
     currency: state.app.currency,
     rate: state.app.rate,
     total: state.app.total,
-    period: state.app.period
+    period: state.app.period,
+    loading: state.app.loading
   }),
   dispatch => ({
     actions: bindActionCreators({
