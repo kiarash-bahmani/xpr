@@ -7,7 +7,8 @@ import Chart from 'react-c3js';
 import 'c3/c3.css';
 import './style.css'
 import {
-  loadData
+  loadData,
+  loadRate
 } from '../../actions/app'
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
     super(props)
     if (props.data.length === 0) {
       props.actions.loadData('day')
+      props.actions.loadRate('day', 'USD')
     }
   }
 
@@ -39,7 +41,8 @@ export default connect(
   }),
   dispatch => ({
     actions: bindActionCreators({
-      loadData
+      loadData,
+      loadRate
     }, dispatch)
   })
 )(App)

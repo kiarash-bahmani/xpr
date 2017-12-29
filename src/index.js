@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export const store = createStore(rootReducer, enhancers)
 export const persistor = persistStore(store, { storage: localForage })
-
+persistor.purge()
 ReactDOM.render(
   <Provider store={store}>
     <App />
